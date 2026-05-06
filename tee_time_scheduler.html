@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Josefin+Sans:wght@300;400;600&display=swap');
+
+:root {
+  --green-deep: #1a2e1a;
+  --green-mid: #2d4a2d;
+  --green-light: #4a7c4a;
+  --green-pale: #e8f0e8;
+  --fairway: #c8dfc8;
+  --cream: #f9f5ee;
+  --gold: #c9a84c;
+  --gold-light: #e8c96a;
+  --text-dark: #1a2e1a;
+  --text-mid: #3d5a3d;
+  --text-muted: #7a9a7a;
+  --white: #ffffff;
+  --shadow: rgba(26,46,26,0.15);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Josefin Sans', sans-serif;
+  background: var(--green-deep);
+  min-height: 100vh;
+  color: var(--text-dark);
+  background-image:
+    radial-gradient(ellipse at 0% 0%, #243d24 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 100%, #0f1f0f 0%, transparent 50%);
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, var(--green-deep) 0%, var(--green-mid) 100%);
+  padding: 28px 32px 24px;
+  border-bottom: 2px solid var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-mark {
+  width: 44px; height: 44px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; flex-shrink: 0;
+}
+
+.header-text h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.header-text p {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 4px;
+}
+
+/* LAYOUT */
+.app {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: calc(100vh - 96px);
+}
+
+/* SIDEBAR */
+.sidebar {
+  background: var(--cream);
+  padding: 28px 24px;
+  border-right: 1px solid #c8d8c8;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* FORM */
+.form-card {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 12px var(--shadow);
+  border: 1px solid #ddeadd;
+}
+
+.field { margin-bottom: 14px; }
+.field label {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.field input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #ddeadd;
+  border-radius: 6px;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 0.88rem;
+  color: var(--text-dark);
+  background: var(--cream);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.field input:focus { border-color: var(--green-light); background: white; }
+
+.add-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--green-mid);
+  color: var(--cream);
+  border: none;
+  border-radius: 7px;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.add-btn:hover { background: var(--green-light); }
+.add-btn:active { transform: scale(0.98); }
+
+/* DAY PICKER */
+.day-list { display: flex; flex-direction: column; gap: 6px; }
+
+.day-btn {
+  padding: 10px 14px;
+  background: white;
+  border: 1.5px solid #ddeadd;
+  border-radius: 7px;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 0.8rem;
+  color: var(--text-mid);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  letter-spacing: 0.05em;
+}
+
+.day-btn:hover { border-color: var(--green-light); color: var(--green-mid); }
+
+.day-btn.active {
+  background: var(--green-mid);
+  border-color: var(--green-mid);
+  color: var(--cream);
+}
+
+.day-count {
+  font-size: 0.65rem;
+  background: var(--fairway);
+  color: var(--green-mid);
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.day-btn.active .day-count {
+  background: rgba(255,255,255,0.2);
+  color: var(--cream);
+}
+
+.no-days {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 12px 0;
+  letter-spacing: 0.05em;
+}
+
+/* MAIN SCHEDULE AREA */
+.schedule {
+  background: var(--green-pale);
+  padding: 32px;
+  background-image: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.4) 0%, transparent 60%);
+}
+
+.schedule-header {
+  margin-bottom: 28px;
+}
+
+.schedule-day-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--green-deep);
+  line-height: 1;
+}
+
+.schedule-sub {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+/* TIMELINE */
+.timeline { display: flex; flex-direction: column; gap: 10px; }
+
+.tee-slot {
+  background: white;
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 2px 8px var(--shadow);
+  border-left: 4px solid var(--green-light);
+  animation: slotIn 0.3s cubic-bezier(0.34,1.2,0.64,1) both;
+  position: relative;
+}
+
+@keyframes slotIn {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.tee-time-display {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--green-deep);
+  min-width: 90px;
+  line-height: 1;
+}
+
+.tee-ampm {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  margin-left: 3px;
+}
+
+.divider-line {
+  width: 1px; height: 36px;
+  background: var(--fairway);
+  flex-shrink: 0;
+}
+
+.players-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  flex: 1;
+}
+
+.player-chip {
+  background: var(--green-pale);
+  color: var(--green-mid);
+  border: 1px solid #b8d4b8;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #bbb;
+  font-size: 1rem;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+.delete-btn:hover { color: #d44; }
+
+/* EMPTY STATE */
+.empty-schedule {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  gap: 12px;
+}
+
+.empty-icon { font-size: 3rem; opacity: 0.4; }
+.empty-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  color: var(--text-muted);
+}
+.empty-sub { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.08em; }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--green-mid); color: var(--cream);
+  padding: 12px 20px; border-radius: 8px;
+  font-size: 0.78rem; letter-spacing: 0.08em;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transform: translateY(80px); opacity: 0;
+  transition: all 0.3s cubic-bezier(0.34,1.2,0.64,1);
+  pointer-events: none; z-index: 100;
+}
+.toast.show { transform: none; opacity: 1; }
+
+@media (max-width: 640px) {
+  .app { grid-template-columns: 1fr; }
+  .schedule { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-mark">⛳</div>
+  <div class="header-text">
+    <h1>TeeSheet</h1>
+    <p>Golf Tee Time Scheduler</p>
+  </div>
+</div>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- ADD TEE TIME FORM -->
+    <div>
+      <div class="section-label">Add a Tee Time</div>
+      <div class="form-card">
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="inputDate">
+        </div>
+        <div class="field">
+          <label>Tee Time</label>
+          <input type="time" id="inputTime">
+        </div>
+        <div class="field">
+          <label>Player Names (comma separated)</label>
+          <input type="text" id="inputPlayers" placeholder="e.g. Conor, Rory, Shane">
+        </div>
+        <button class="add-btn" onclick="addTeeTime()">+ Add to Schedule</button>
+      </div>
+    </div>
+
+    <!-- DAY PICKER -->
+    <div>
+      <div class="section-label">View by Day</div>
+      <div class="day-list" id="dayList">
+        <div class="no-days">No tee times yet — add one!</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SCHEDULE VIEW -->
+  <div class="schedule" id="scheduleArea">
+    <div class="empty-schedule">
+      <div class="empty-icon">🏌️</div>
+      <div class="empty-title">No day selected</div>
+      <div class="empty-sub">Add a tee time and pick a day to view the schedule</div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// State
+let teeTimes = JSON.parse(localStorage.getItem('teeTimes') || '[]');
+let selectedDay = null;
+
+// Set default date to today
+document.getElementById('inputDate').value = new Date().toISOString().split('T')[0];
+
+function save() {
+  localStorage.setItem('teeTimes', JSON.stringify(teeTimes));
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function fmt12(time24) {
+  const [h, m] = time24.split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const h12 = h % 12 || 12;
+  return { time: `${h12}:${String(m).padStart(2,'0')}`, ampm };
+}
+
+function fmtDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-IE', { weekday: 'long', month: 'long', day: 'numeric' });
+}
+
+function fmtDateShort(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-IE', { weekday: 'short', month: 'short', day: 'numeric' });
+}
+
+function addTeeTime() {
+  const date = document.getElementById('inputDate').value;
+  const time = document.getElementById('inputTime').value;
+  const playersRaw = document.getElementById('inputPlayers').value;
+
+  if (!date || !time || !playersRaw.trim()) {
+    showToast('⚠️ Please fill in all fields'); return;
+  }
+
+  const players = playersRaw.split(',').map(p => p.trim()).filter(Boolean);
+  if (!players.length) { showToast('⚠️ Enter at least one player'); return; }
+
+  teeTimes.push({ id: Date.now(), date, time, players });
+  teeTimes.sort((a,b) => (a.date+a.time).localeCompare(b.date+b.time));
+  save();
+
+  document.getElementById('inputPlayers').value = '';
+  document.getElementById('inputTime').value = '';
+
+  renderDayList();
+  if (selectedDay === date) renderSchedule(date);
+  else selectDay(date);
+
+  showToast('✅ Tee time added!');
+}
+
+function deleteTeeTime(id) {
+  teeTimes = teeTimes.filter(t => t.id !== id);
+  save();
+  renderDayList();
+  if (selectedDay) renderSchedule(selectedDay);
+}
+
+function getDays() {
+  return [...new Set(teeTimes.map(t => t.date))].sort();
+}
+
+function renderDayList() {
+  const days = getDays();
+  const list = document.getElementById('dayList');
+  if (!days.length) {
+    list.innerHTML = '<div class="no-days">No tee times yet — add one!</div>';
+    return;
+  }
+  list.innerHTML = days.map(d => {
+    const count = teeTimes.filter(t => t.date === d).length;
+    const active = d === selectedDay ? 'active' : '';
+    return `<button class="day-btn ${active}" onclick="selectDay('${d}')">
+      ${fmtDateShort(d)}
+      <span class="day-count">${count}</span>
+    </button>`;
+  }).join('');
+}
+
+function selectDay(date) {
+  selectedDay = date;
+  renderDayList();
+  renderSchedule(date);
+}
+
+function renderSchedule(date) {
+  const slots = teeTimes.filter(t => t.date === date);
+  const area = document.getElementById('scheduleArea');
+
+  if (!slots.length) {
+    area.innerHTML = `<div class="empty-schedule">
+      <div class="empty-icon">📋</div>
+      <div class="empty-title">No tee times this day</div>
+      <div class="empty-sub">Add a tee time for ${fmtDateShort(date)}</div>
+    </div>`;
+    return;
+  }
+
+  area.innerHTML = `
+    <div class="schedule-header">
+      <div class="schedule-day-title">${fmtDate(date)}</div>
+      <div class="schedule-sub">${slots.length} tee time${slots.length !== 1 ? 's' : ''} scheduled</div>
+    </div>
+    <div class="timeline">
+      ${slots.map((s, i) => {
+        const {time, ampm} = fmt12(s.time);
+        return `<div class="tee-slot" style="animation-delay:${i*0.06}s">
+          <div class="tee-time-display">${time}<span class="tee-ampm">${ampm}</span></div>
+          <div class="divider-line"></div>
+          <div class="players-list">
+            ${s.players.map(p => `<span class="player-chip">👤 ${p}</span>`).join('')}
+          </div>
+          <button class="delete-btn" onclick="deleteTeeTime(${s.id})" title="Remove">✕</button>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+// Init
+renderDayList();
+if (getDays().length) selectDay(getDays()[0]);
+</script>
+</body>
+</html>
